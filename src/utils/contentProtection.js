@@ -29,12 +29,39 @@ export const useContentProtection = (containerRef, enabled = true) => {
       }
     };
 
+    // Mobile "press and hold" produces a long touchstart with no movement,
+    // which triggers the native text-selection magnifier/callout menu.
+    // Cancelling touchstart after a short hold (and on any long touchmove)
+    // stops that magnifier from ever appearing.
+    let holdTimer = null;
+    let touchMoved = false;
+
+    const onTouchStart = (e) => {
+      touchMoved = false;
+      clearTimeout(holdTimer);
+      holdTimer = setTimeout(() => {
+        if (!touchMoved) {
+          e.preventDefault();
+        }
+      }, 350);
+    };
+    const onTouchMove = () => {
+      touchMoved = true;
+      clearTimeout(holdTimer);
+    };
+    const onTouchEnd = () => {
+      clearTimeout(holdTimer);
+    };
+
     node.addEventListener('copy', blockEvent);
     node.addEventListener('cut', blockEvent);
     node.addEventListener('paste', blockEvent);
     node.addEventListener('selectstart', blockEvent);
     node.addEventListener('contextmenu', blockEvent);
     node.addEventListener('dragstart', blockEvent);
+    node.addEventListener('touchstart', onTouchStart, { passive: true });
+    node.addEventListener('touchmove', onTouchMove, { passive: true });
+    node.addEventListener('touchend', onTouchEnd, { passive: true });
     // Attached at document level (capture phase) so Ctrl/Cmd+A etc. are
     // blocked even when focus is outside the content container itself.
     document.addEventListener('keydown', blockShortcuts, true);
@@ -46,7 +73,11 @@ export const useContentProtection = (containerRef, enabled = true) => {
       node.removeEventListener('selectstart', blockEvent);
       node.removeEventListener('contextmenu', blockEvent);
       node.removeEventListener('dragstart', blockEvent);
+      node.removeEventListener('touchstart', onTouchStart);
+      node.removeEventListener('touchmove', onTouchMove);
+      node.removeEventListener('touchend', onTouchEnd);
       document.removeEventListener('keydown', blockShortcuts, true);
+      clearTimeout(holdTimer);
     };
   }, [containerRef, enabled]);
 };

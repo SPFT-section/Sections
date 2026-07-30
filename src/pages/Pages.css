@@ -1259,6 +1259,8 @@
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
+  /* Disables the iOS/Android press-and-hold callout (Copy / Look Up / magnifier) */
+  -webkit-touch-callout: none;
 }
 
 .no-copy img {
