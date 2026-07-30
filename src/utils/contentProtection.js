@@ -21,24 +21,32 @@ export const useContentProtection = (containerRef, enabled = true) => {
 
     const blockShortcuts = (e) => {
       const key = e.key?.toLowerCase();
-      const isCopyLike = (e.ctrlKey || e.metaKey) && ['c', 'x', 'p', 's', 'u'].includes(key);
+      // Ctrl/Cmd + C (copy), X (cut), V (paste), A (select all), P (print), S (save), U (view-source)
+      const isCopyLike = (e.ctrlKey || e.metaKey) && ['c', 'x', 'v', 'a', 'p', 's', 'u'].includes(key);
       if (isCopyLike) {
         e.preventDefault();
+        e.stopPropagation();
       }
     };
 
     node.addEventListener('copy', blockEvent);
     node.addEventListener('cut', blockEvent);
+    node.addEventListener('paste', blockEvent);
+    node.addEventListener('selectstart', blockEvent);
     node.addEventListener('contextmenu', blockEvent);
     node.addEventListener('dragstart', blockEvent);
-    node.addEventListener('keydown', blockShortcuts);
+    // Attached at document level (capture phase) so Ctrl/Cmd+A etc. are
+    // blocked even when focus is outside the content container itself.
+    document.addEventListener('keydown', blockShortcuts, true);
 
     return () => {
       node.removeEventListener('copy', blockEvent);
       node.removeEventListener('cut', blockEvent);
+      node.removeEventListener('paste', blockEvent);
+      node.removeEventListener('selectstart', blockEvent);
       node.removeEventListener('contextmenu', blockEvent);
       node.removeEventListener('dragstart', blockEvent);
-      node.removeEventListener('keydown', blockShortcuts);
+      document.removeEventListener('keydown', blockShortcuts, true);
     };
   }, [containerRef, enabled]);
 };
