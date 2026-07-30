@@ -1,0 +1,99 @@
+/* ===== Theme Variables — Glassmorphism (refined) ===== */
+
+/* ===== Light Mode (Default) ===== */
+:root {
+  /* Primary Colors — a single restrained indigo, not a rainbow gradient */
+  --primary: #3B5BDB;
+  --primary-hover: #2F4BC0;
+  --secondary: #5C6AC4;
+  --secondary-hover: #4C5AB4;
+
+  /* Background — a very subtle, desaturated mesh; meant to be felt, not seen */
+  --bg-primary: #F4F6FB;
+  --bg-mesh-1: #DCE3F7;
+  --bg-mesh-2: #E7DEF5;
+  --bg-mesh-3: #DCEFEA;
+
+  /* Glass surfaces — translucent so the mesh shows faintly through the blur */
+  --bg-secondary: rgba(255, 255, 255, 0.72);
+  --bg-tertiary: rgba(255, 255, 255, 0.5);
+  --bg-hover: rgba(255, 255, 255, 0.88);
+
+  /* Text */
+  --text-primary: #1A202C;
+  --text-secondary: #4A5568;
+  --text-tertiary: #718096;
+  --text-inverse: #FFFFFF;
+
+  /* Accent */
+  --accent: #C2703D;
+  --accent-hover: #A85F32;
+
+  /* Glass border / rim-light */
+  --border: rgba(226, 232, 240, 0.8);
+  --border-dark: rgba(203, 213, 224, 0.9);
+  --glass-highlight: rgba(255, 255, 255, 0.6);
+  --glass-blur: 14px;
+  --glass-blur-sm: 6px;
+
+  /* Status */
+  --success: #2F855A;
+  --warning: #B7791F;
+  --error: #C53030;
+  --info: #2C5282;
+
+  /* Shadow — soft, restrained; a hint of glass, not a glow effect */
+  --shadow-sm: 0 1px 3px rgba(26, 32, 44, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  --shadow: 0 2px 8px rgba(26, 32, 44, 0.07), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  --shadow-md: 0 6px 20px rgba(26, 32, 44, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.45);
+  --shadow-lg: 0 12px 32px rgba(26, 32, 44, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.45);
+  --shadow-xl: 0 20px 48px rgba(26, 32, 44, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+
+  /* Radius — modest, not the exaggerated "bubble" corners of template UIs */
+  --radius-sm: 6px;
+  --radius: 10px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+
+  /* Transitions */
+  --transition: 0.2s ease;
+  --transition-slow: 0.35s ease;
+}
+
+/* ===== Dark Mode ===== */
+[data-theme="dark"] {
+  --primary: #7C93F0;
+  --primary-hover: #91A5F3;
+  --secondary: #9BA6E8;
+  --secondary-hover: #AEB7EC;
+
+  --bg-primary: #12151F;
+  --bg-mesh-1: #1B2340;
+  --bg-mesh-2: #2A2140;
+  --bg-mesh-3: #16332F;
+
+  --bg-secondary: rgba(26, 30, 46, 0.72);
+  --bg-tertiary: rgba(26, 30, 46, 0.5);
+  --bg-hover: rgba(46, 51, 71, 0.75);
+
+  --text-primary: #F7FAFC;
+  --text-secondary: #A0AEC0;
+  --text-tertiary: #718096;
+  --text-inverse: #1A202C;
+
+  --accent: #DD9257;
+  --accent-hover: #C2703D;
+
+  --border: rgba(255, 255, 255, 0.08);
+  --border-dark: rgba(255, 255, 255, 0.14);
+  --glass-highlight: rgba(255, 255, 255, 0.1);
+  --glass-blur: 14px;
+  --glass-blur-sm: 6px;
+
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  --shadow: 0 2px 8px rgba(0, 0, 0, 0.32), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  --shadow-md: 0 6px 20px rgba(0, 0, 0, 0.36), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  --shadow-xl: 0 20px 48px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}

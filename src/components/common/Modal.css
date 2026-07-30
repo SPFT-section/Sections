@@ -1,0 +1,135 @@
+/* ===== Modal Styles ===== */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.2s ease;
+  padding: 20px;
+}
+
+.modal-content {
+  background: var(--bg-secondary);
+  border-radius: var(--radius-lg);
+  max-height: 90vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  animation: slideUp 0.3s ease;
+  box-shadow: var(--shadow-xl);
+}
+
+.modal-sm {
+  max-width: 400px;
+}
+
+.modal-md {
+  max-width: 560px;
+}
+
+.modal-lg {
+  max-width: 720px;
+}
+
+.modal-xl {
+  max-width: 960px;
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border);
+}
+
+.modal-title {
+  font-size: var(--text-xl);
+  font-weight: var(--weight-semibold);
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.modal-close-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  transition: all var(--transition);
+  color: var(--text-secondary);
+}
+
+.modal-close-btn:hover {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+}
+
+.modal-body {
+  padding: 24px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.modal-footer {
+  padding: 16px 24px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+/* ===== Animations ===== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px) scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+  .modal-content {
+    max-height: 100vh;
+    border-radius: 0;
+    margin: 0;
+  }
+
+  .modal-overlay {
+    padding: 0;
+  }
+
+  .modal-header {
+    padding: 16px 20px;
+  }
+
+  .modal-body {
+    padding: 16px 20px;
+  }
+
+  .modal-footer {
+    padding: 12px 20px;
+    flex-direction: column;
+  }
+
+  .modal-footer .btn {
+    width: 100%;
+  }
+}
