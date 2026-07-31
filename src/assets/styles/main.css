@@ -18,15 +18,31 @@ html {
 body {
   font-family: var(--font-primary);
   background-color: var(--bg-primary);
-  background-image:
-    radial-gradient(at 10% 0%, var(--bg-mesh-1) 0px, transparent 45%),
-    radial-gradient(at 90% 10%, var(--bg-mesh-2) 0px, transparent 40%),
-    radial-gradient(at 50% 100%, var(--bg-mesh-3) 0px, transparent 45%);
-  background-attachment: fixed;
   color: var(--text-primary);
   transition: background-color 0.3s ease, color 0.3s ease;
   line-height: 1.6;
   min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Ambient background glow — blurred and low-opacity so the colored light
+   reads as soft atmosphere behind the glass panels, not as distinct,
+   hard-edged colored blobs. */
+body::before {
+  content: '';
+  position: fixed;
+  inset: -15%;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    radial-gradient(ellipse 40% 35% at 12% 0%, var(--bg-mesh-1), transparent 70%),
+    radial-gradient(ellipse 38% 32% at 90% 8%, var(--bg-mesh-2), transparent 70%),
+    radial-gradient(ellipse 45% 40% at 50% 100%, var(--bg-mesh-3), transparent 70%);
+  filter: blur(72px);
+  opacity: var(--mesh-opacity);
+  transition: opacity 0.3s ease;
+  will-change: opacity;
 }
 
 a {

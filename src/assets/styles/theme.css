@@ -13,6 +13,7 @@
   --bg-mesh-1: #DCE3F7;
   --bg-mesh-2: #E7DEF5;
   --bg-mesh-3: #DCEFEA;
+  --mesh-opacity: 0.55;
 
   /* Glass surfaces — translucent so the mesh shows faintly through the blur */
   --bg-secondary: rgba(255, 255, 255, 0.72);
@@ -72,6 +73,7 @@
   --bg-mesh-1: #1B2340;
   --bg-mesh-2: #2A2140;
   --bg-mesh-3: #16332F;
+  --mesh-opacity: 0.4;
 
   --bg-secondary: rgba(26, 30, 46, 0.72);
   --bg-tertiary: rgba(26, 30, 46, 0.5);
