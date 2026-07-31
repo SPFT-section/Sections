@@ -181,6 +181,18 @@
   color: white;
 }
 
+.novel-status-badge.shared {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--accent);
+  color: white;
+}
+
+.novel-shared-by {
+  color: var(--text-tertiary);
+}
+
 .novel-card-body {
   padding: 16px;
 }

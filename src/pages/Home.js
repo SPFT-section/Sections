@@ -150,9 +150,15 @@ export const Home = () => {
                       <Icon name="book" size={32} />
                     </div>
                   )}
-                  <span className={`novel-status-badge ${novel.status}`}>
-                    {novel.status}
-                  </span>
+                  {novel.isShared ? (
+                    <span className="novel-status-badge shared">
+                      <Icon name="lock" size={12} /> Shared
+                    </span>
+                  ) : (
+                    <span className={`novel-status-badge ${novel.status}`}>
+                      {novel.status}
+                    </span>
+                  )}
                 </div>
                 <div className="novel-card-body">
                   <h3 className="novel-card-title">{novel.title}</h3>
@@ -174,13 +180,15 @@ export const Home = () => {
                     >
                       Read
                     </Button>
-                    <Button
-                      variant="secondary"
-                      size="sm"
-                      onClick={() => navigate(`/editor/${novel.id}`)}
-                    >
-                      Edit
-                    </Button>
+                    {!novel.isShared && (
+                      <Button
+                        variant="secondary"
+                        size="sm"
+                        onClick={() => navigate(`/editor/${novel.id}`)}
+                      >
+                        Edit
+                      </Button>
+                    )}
                   </div>
                 </div>
               </div>

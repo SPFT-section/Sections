@@ -1,0 +1,108 @@
+.import-shared-page {
+  min-height: calc(100vh - 200px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+.import-shared-card {
+  width: 100%;
+  max-width: 480px;
+  background: var(--bg-secondary);
+  backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  padding: 36px 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 6px;
+}
+
+.import-shared-icon {
+  color: var(--primary);
+  margin-bottom: 8px;
+}
+
+.import-shared-icon.error {
+  color: var(--error);
+}
+
+.import-shared-eyebrow {
+  font-size: var(--text-sm);
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.import-shared-card h1 {
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-semibold);
+  color: var(--text-primary);
+  margin: 4px 0;
+}
+
+.import-shared-meta {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+}
+
+.import-shared-synopsis {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 12px;
+}
+
+.import-shared-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: var(--radius);
+  background: rgba(59, 91, 219, 0.08);
+  border: 1px solid rgba(59, 91, 219, 0.2);
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+  line-height: 1.5;
+  text-align: left;
+  margin: 8px 0 20px;
+}
+
+.import-shared-notice svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: var(--primary);
+}
+
+.import-shared-success {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--success);
+  font-size: var(--text-sm);
+  margin-bottom: 14px;
+}
+
+.import-shared-card .btn {
+  width: 100%;
+}
+
+.import-shared-cancel {
+  background: none;
+  border: none;
+  color: var(--text-tertiary);
+  font-size: var(--text-sm);
+  cursor: pointer;
+  margin-top: 14px;
+  padding: 4px;
+}
+
+.import-shared-cancel:hover {
+  color: var(--text-secondary);
+  text-decoration: underline;
+}

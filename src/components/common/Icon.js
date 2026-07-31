@@ -62,6 +62,10 @@ const iconMap = {
   alertCircle: LucideIcons.AlertCircle,
   xCircle: LucideIcons.XCircle,
   info: LucideIcons.Info,
+  share: LucideIcons.Share2,
+  link: LucideIcons.Link2,
+  lock: LucideIcons.Lock,
+  users: LucideIcons.Users,
   // เพิ่มไอคอนที่ใช้ในหน้า NovelReader
   toc: LucideIcons.List,
   'table-of-contents': LucideIcons.List,

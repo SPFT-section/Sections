@@ -2,7 +2,9 @@ import React, { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../components/common/Button';
 import { Icon } from '../components/common/Icon';
+import { ShareModal } from '../components/novel/ShareModal';
 import { useNovel } from '../hooks/useNovel';
+import { useUserStore } from '../store/userStore';
 import { format } from '../utils/formatter';
 import { NOVEL_STATUS, NOVEL_STATUS_LABELS, GENRES } from '../config/constants';
 import './Pages.css';
@@ -10,11 +12,13 @@ import './Pages.css';
 export const Library = () => {
   const navigate = useNavigate();
   const { novels, deleteNovel, getAllNovels } = useNovel();
+  const { profile } = useUserStore();
   const [searchTerm, setSearchTerm] = useState('');
   const [filterStatus, setFilterStatus] = useState('all');
   const [filterGenre, setFilterGenre] = useState('all');
   const [sortBy, setSortBy] = useState('updatedAt');
   const [sortOrder, setSortOrder] = useState('desc');
+  const [shareTarget, setShareTarget] = useState(null);
 
   const filteredNovels = useMemo(() => {
     let result = getAllNovels(sortBy, sortOrder);
@@ -178,9 +182,15 @@ export const Library = () => {
                     <Icon name="book" size={32} />
                   </div>
                 )}
-                <span className={`novel-status-badge ${novel.status}`}>
-                  {novel.status}
-                </span>
+                {novel.isShared ? (
+                  <span className="novel-status-badge shared">
+                    <Icon name="lock" size={12} /> Shared
+                  </span>
+                ) : (
+                  <span className={`novel-status-badge ${novel.status}`}>
+                    {novel.status}
+                  </span>
+                )}
                 {novel.genre && novel.genre.length > 0 && (
                   <div className="novel-genres">
                     {novel.genre.slice(0, 2).map((g) => (
@@ -194,7 +204,10 @@ export const Library = () => {
               </div>
               <div className="novel-card-body">
                 <h3 className="novel-card-title">{novel.title}</h3>
-                <p className="novel-card-author">by {novel.author}</p>
+                <p className="novel-card-author">
+                  by {novel.author}
+                  {novel.isShared && <span className="novel-shared-by"> • shared by {novel.sharedBy}</span>}
+                </p>
                 <p className="novel-card-synopsis">
                   {format.truncate(novel.synopsis || 'No synopsis', 80)}
                 </p>
@@ -212,14 +225,35 @@ export const Library = () => {
                   >
                     Read
                   </Button>
-                  <Button
-                    variant="secondary"
-                    size="sm"
-                    icon={<Icon name="pencil" size={16} />}
-                    onClick={() => navigate(`/editor/${novel.id}`)}
-                  >
-                    Edit
-                  </Button>
+                  {novel.isShared ? (
+                    <Button
+                      variant="secondary"
+                      size="sm"
+                      icon={<Icon name="lock" size={16} />}
+                      disabled
+                      title="นิยายที่แชร์มาแก้ไขไม่ได้"
+                    >
+                      Read-only
+                    </Button>
+                  ) : (
+                    <>
+                      <Button
+                        variant="secondary"
+                        size="sm"
+                        icon={<Icon name="pencil" size={16} />}
+                        onClick={() => navigate(`/editor/${novel.id}`)}
+                      >
+                        Edit
+                      </Button>
+                      <Button
+                        variant="secondary"
+                        size="sm"
+                        icon={<Icon name="share" size={16} />}
+                        onClick={() => setShareTarget(novel)}
+                        title="แชร์นิยายเรื่องนี้ (อ่านอย่างเดียว)"
+                      />
+                    </>
+                  )}
                   <Button
                     variant="danger"
                     size="sm"
@@ -263,6 +297,13 @@ export const Library = () => {
           )}
         </div>
       )}
+
+      <ShareModal
+        isOpen={Boolean(shareTarget)}
+        onClose={() => setShareTarget(null)}
+        novel={shareTarget}
+        authorName={profile?.displayName}
+      />
     </div>
   );
 };

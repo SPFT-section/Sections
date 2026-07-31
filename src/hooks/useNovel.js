@@ -39,15 +39,19 @@ const useNovelState = () => {
   // Update a novel
   const updateNovel = useCallback((id, data) => {
     setNovels((prev) =>
-      prev.map((novel) =>
-        novel.id === id
-          ? {
-              ...novel,
-              ...data,
-              updatedAt: Date.now(),
-            }
-          : novel
-      )
+      prev.map((novel) => {
+        if (novel.id !== id) return novel;
+        // Defense in depth: shared (read-only) novels must never be
+        // mutated, even if something bypasses the UI (e.g. a direct
+        // /editor/:id navigation). The UI is also expected to hide all
+        // edit affordances for these, but this guard is the real backstop.
+        if (novel.isShared) return novel;
+        return {
+          ...novel,
+          ...data,
+          updatedAt: Date.now(),
+        };
+      })
     );
   }, [setNovels]);
 
@@ -182,6 +186,47 @@ const useNovelState = () => {
     return sorted;
   }, [novels]);
 
+  // Import a novel received via a share link. Always creates a read-only,
+  // local copy — the recipient can read it but the UI (see Library/Editor)
+  // must never expose edit/write actions for novels with isShared: true.
+  // Returns the existing local copy instead of duplicating it if this
+  // exact shared novel (by sourceId) was already imported before.
+  const importSharedNovel = useCallback((sharePayload) => {
+    const { sourceId, sharedBy, novel: sharedNovel } = sharePayload;
+
+    const existing = novels.find(
+      (n) => n.isShared && n.sourceId === sourceId
+    );
+    if (existing) return existing;
+
+    const newNovel = {
+      id: uuidv4(),
+      title: sharedNovel.title || 'Untitled',
+      author: sharedNovel.author || 'Anonymous',
+      synopsis: sharedNovel.synopsis || '',
+      coverImage: sharedNovel.coverImage || '',
+      genre: sharedNovel.genre || [],
+      status: 'published',
+      createdAt: Date.now(),
+      updatedAt: Date.now(),
+      chapters: (sharedNovel.chapters || []).map((c, index) => ({
+        id: uuidv4(),
+        title: c.title || 'Untitled Chapter',
+        content: c.content || '',
+        order: c.order || index + 1,
+        createdAt: Date.now(),
+        updatedAt: Date.now(),
+      })),
+      isShared: true,
+      sharedBy: sharedBy || sharedNovel.author || 'Anonymous',
+      sourceId,
+      importedAt: Date.now(),
+    };
+
+    setNovels((prev) => [...prev, newNovel]);
+    return newNovel;
+  }, [novels, setNovels]);
+
   return {
     novels,
     currentNovel,
@@ -199,6 +244,7 @@ const useNovelState = () => {
     getChapter,
     getNovelStats,
     getAllNovels,
+    importSharedNovel,
   };
 };
 

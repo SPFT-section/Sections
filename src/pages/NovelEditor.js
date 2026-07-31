@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Button } from '../components/common/Button';
 import { Icon } from '../components/common/Icon';
+import { ShareModal } from '../components/novel/ShareModal';
 import { useNovel } from '../hooks/useNovel';
 import { GENRES, NOVEL_STATUS } from '../config/constants';
 import { format } from '../utils/formatter';
@@ -26,6 +27,7 @@ export const NovelEditor = () => {
   const [activeTab, setActiveTab] = useState('info');
   const [selectedChapterId, setSelectedChapterId] = useState(null);
   const [isSaving, setIsSaving] = useState(false);
+  const [isShareOpen, setIsShareOpen] = useState(false);
 
   // Novel info state
   const [title, setTitle] = useState('');
@@ -47,6 +49,11 @@ export const NovelEditor = () => {
     if (id && id !== 'new') {
       const existing = getNovel(id);
       if (existing) {
+        if (existing.isShared) {
+          // Shared novels are read-only; send them to the reader instead.
+          navigate(`/reader/${existing.id}`, { replace: true });
+          return;
+        }
         setNovel(existing);
         setTitle(existing.title);
         setAuthor(existing.author);
@@ -211,8 +218,24 @@ export const NovelEditor = () => {
               Preview
             </Button>
           )}
+          {novel && (
+            <Button
+              variant="secondary"
+              icon={<Icon name="share" size={20} />}
+              onClick={() => setIsShareOpen(true)}
+            >
+              Share
+            </Button>
+          )}
         </div>
       </div>
+
+      <ShareModal
+        isOpen={isShareOpen}
+        onClose={() => setIsShareOpen(false)}
+        novel={novel ? { ...novel, title, author, synopsis, genre, coverImage, chapters } : null}
+        authorName={author}
+      />
 
       <div className="editor-tabs">
         <button

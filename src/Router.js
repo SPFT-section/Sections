@@ -8,6 +8,7 @@ const History = lazy(() => import('./pages/History'));
 const Profile = lazy(() => import('./pages/Profile'));
 const NovelEditor = lazy(() => import('./pages/NovelEditor'));
 const NovelReader = lazy(() => import('./pages/NovelReader'));
+const ImportShared = lazy(() => import('./pages/ImportShared'));
 
 // Loading component
 const PageLoader = () => (
@@ -46,6 +47,7 @@ export const AppRoutes = () => {
         <Route path="/editor/:id" element={<NovelEditor />} />
         <Route path="/reader/:novelId" element={<NovelReader />} />
         <Route path="/reader/:novelId/:chapterId" element={<NovelReader />} />
+        <Route path="/import" element={<ImportShared />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Suspense>
