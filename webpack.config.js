@@ -89,7 +89,7 @@ module.exports = (env, argv) => {
         template: './public/index.html',
         filename: 'index.html',
         // Resolve favicon path explicitly so HtmlWebpackPlugin can read it reliably.
-        favicon: path.resolve(__dirname, 'public', 'favicon.svg'),
+        favicon: path.resolve(__dirname, 'public', 'logo.png'),
         inject: true, // ✅ เพิ่มบรรทัดนี้
         minify: isProduction ? {
           removeComments: true,

@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
-  <!-- Isometric cube mark for STQ (Standard To Quality) -->
-  <polygon points="32,4 58,18 58,46 32,60 6,46 6,18" fill="none" stroke="#1A365D" stroke-width="2" stroke-linejoin="round"/>
-  <polygon points="32,4 58,18 32,32 6,18" fill="#2B6CB0"/>
-  <polygon points="6,18 32,32 32,60 6,46" fill="#1A365D"/>
-  <polygon points="58,18 32,32 32,60 58,46" fill="#2B4C7E"/>
-  <circle cx="32" cy="32" r="4" fill="#ED8936"/>
-</svg>
