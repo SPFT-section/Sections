@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import { Icon } from './Icon';
 import './Modal.css';
 
@@ -40,7 +41,11 @@ export const Modal = ({
 
   if (!isOpen) return null;
 
-  return (
+  // Portal to <body>: any ancestor with backdrop-filter/filter/transform
+  // (e.g. the glassmorphism header) creates a new CSS containing block,
+  // which would otherwise trap this modal's `position: fixed` inside that
+  // ancestor's small box instead of the full viewport.
+  return createPortal(
     <div
       className={`modal-overlay ${className}`}
       onClick={handleOverlayClick}
@@ -62,6 +67,7 @@ export const Modal = ({
         <div className="modal-body">{children}</div>
         {footer && <div className="modal-footer">{footer}</div>}
       </div>
-    </div>
+    </div>,
+    document.body
   );
 };
