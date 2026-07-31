@@ -12,7 +12,7 @@ export const Footer = () => {
         <div className="footer-brand">
           <div className="footer-logo">
             <img
-              src="favicon.svg"
+              src="logo-icon.png"
               alt="SECTiON Logo"
               width="24"
               height="24"

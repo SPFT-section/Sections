@@ -23,7 +23,7 @@ export const Navigation = ({ isOpen, onClose }) => {
         <div className="navigation-header">
           <div className="navigation-logo">
             <img
-              src="favicon.svg"
+              src="logo-icon.png"
               alt="SECTiON Logo"
               width="32"
               height="32"

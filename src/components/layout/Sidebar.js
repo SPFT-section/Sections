@@ -14,7 +14,7 @@ export const Sidebar = ({ currentPath = '/' }) => {
   return (
     <aside className="sidebar">
       <Link to="/" className="sidebar-logo">
-        <img src="favicon.svg" alt="SECTiON Logo" width="28" height="28" />
+        <img src="logo-icon.png" alt="SECTiON Logo" width="28" height="28" />
         <span>SECTiON</span>
       </Link>
 

@@ -27,7 +27,7 @@ export const Header = ({ onMenuToggle, isMenuOpen }) => {
 
           <Link to="/" className="header-logo">
             <img
-              src="favicon.svg"
+              src="logo-icon.png"
               alt="SECTiON Logo"
               className="header-logo-icon"
               width="32"
