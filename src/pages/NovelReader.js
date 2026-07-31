@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Button } from '../components/common/Button';
 import { Icon } from '../components/common/Icon';
+import { ReadingView } from '../components/novel/ReadingView';
 import { useNovel } from '../hooks/useNovel';
 import { useReadingSettings } from '../hooks/useReadingSettings';
 import { useHistoryStore } from '../store/historyStore';
@@ -187,23 +188,7 @@ export const NovelReader = () => {
       <div className="reader-body">
         {/* Reading Content */}
         <div className="reader-content-wrapper">
-          <div
-            ref={contentRef}
-            className="reader-content"
-            style={readingStyles}
-          >
-            <h1 className="reader-chapter-title">{currentChapter.title}</h1>
-            <div 
-              className="reader-chapter-content"
-              dangerouslySetInnerHTML={{ 
-                __html: currentChapter.content
-                  .split('\n')
-                  .filter(line => line.trim())
-                  .map(line => `<p>${line}</p>`)
-                  .join('') 
-              }}
-            />
-          </div>
+          <ReadingView ref={contentRef} chapter={currentChapter} styles={readingStyles} />
 
           {/* Progress Bar */}
           <div className="reader-progress-bar">

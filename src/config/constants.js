@@ -8,6 +8,14 @@ export const APP = {
   description: 'เว็บแอปเขียนและอ่านนิยายแบบ Local-First',
 };
 
+// Dispatched on `window` whenever useLocalStorage fails to persist a write
+// (e.g. quota exceeded, or storage blocked by browser privacy settings).
+// Kept as a plain DOM event (not a React context call) so the low-level
+// storage hook doesn't need to know about the toast system at all — any
+// listener, present or future, can react to it. See
+// components/common/StorageErrorListener.js for the current listener.
+export const STORAGE_ERROR_EVENT = 'section:storage-error';
+
 export const STORAGE = {
   keys: {
     novels: 'stq-novels',

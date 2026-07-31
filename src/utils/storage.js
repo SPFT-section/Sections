@@ -79,82 +79,10 @@ export const storage = {
   },
 };
 
-// IndexedDB helper for larger data
-export const indexedDBStorage = {
-  open: (dbName, version = 1) => {
-    return new Promise((resolve, reject) => {
-      const request = indexedDB.open(dbName, version);
-      request.onupgradeneeded = (event) => {
-        const db = event.target.result;
-        if (!db.objectStoreNames.contains('novels')) {
-          db.createObjectStore('novels', { keyPath: 'id' });
-        }
-        if (!db.objectStoreNames.contains('chapters')) {
-          db.createObjectStore('chapters', { keyPath: 'id' });
-        }
-      };
-      request.onsuccess = () => resolve(request.result);
-      request.onerror = () => reject(request.error);
-    });
-  },
-
-  save: (dbName, storeName, data) => {
-    return new Promise(async (resolve, reject) => {
-      try {
-        const db = await indexedDBStorage.open(dbName);
-        const transaction = db.transaction([storeName], 'readwrite');
-        const store = transaction.objectStore(storeName);
-        const request = store.put(data);
-        request.onsuccess = () => resolve(request.result);
-        request.onerror = () => reject(request.error);
-      } catch (error) {
-        reject(error);
-      }
-    });
-  },
-
-  get: (dbName, storeName, id) => {
-    return new Promise(async (resolve, reject) => {
-      try {
-        const db = await indexedDBStorage.open(dbName);
-        const transaction = db.transaction([storeName], 'readonly');
-        const store = transaction.objectStore(storeName);
-        const request = store.get(id);
-        request.onsuccess = () => resolve(request.result);
-        request.onerror = () => reject(request.error);
-      } catch (error) {
-        reject(error);
-      }
-    });
-  },
-
-  getAll: (dbName, storeName) => {
-    return new Promise(async (resolve, reject) => {
-      try {
-        const db = await indexedDBStorage.open(dbName);
-        const transaction = db.transaction([storeName], 'readonly');
-        const store = transaction.objectStore(storeName);
-        const request = store.getAll();
-        request.onsuccess = () => resolve(request.result);
-        request.onerror = () => reject(request.error);
-      } catch (error) {
-        reject(error);
-      }
-    });
-  },
-
-  delete: (dbName, storeName, id) => {
-    return new Promise(async (resolve, reject) => {
-      try {
-        const db = await indexedDBStorage.open(dbName);
-        const transaction = db.transaction([storeName], 'readwrite');
-        const store = transaction.objectStore(storeName);
-        const request = store.delete(id);
-        request.onsuccess = () => resolve(request.result);
-        request.onerror = () => reject(request.error);
-      } catch (error) {
-        reject(error);
-      }
-    });
-  },
-};
+// NOTE: an IndexedDB helper used to live here, but nothing in the app ever
+// called it — novels, chapters, and everything else are stored through
+// `storage` (localStorage) above via useLocalStorage. It was removed as
+// dead code rather than left in place implying a capability the app
+// doesn't actually have. Moving large content (chapters, cover images) to
+// IndexedDB remains a real option for lifting the ~5-10MB localStorage
+// quota ceiling, it just isn't implemented yet.

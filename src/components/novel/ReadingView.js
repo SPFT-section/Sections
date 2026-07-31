@@ -1,27 +1,32 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { useContentProtection } from '../../utils/contentProtection';
+import { splitIntoParagraphs } from '../../utils/textUtils';
 
-export const ReadingView = ({ chapter, styles }) => {
-  const contentRef = useRef(null);
-  useContentProtection(contentRef, true);
+// Single source of truth for rendering chapter content in the reader.
+// Accepts a forwarded ref so a parent (e.g. NovelReader) can track scroll
+// position on the same DOM node that content-protection is attached to.
+export const ReadingView = React.forwardRef(({ chapter, styles, protect = true }, ref) => {
+  useContentProtection(ref, protect);
 
   if (!chapter) return null;
 
-  const paragraphsHtml = (chapter.content || '')
-    .split('\n')
-    .filter((line) => line.trim())
-    .map((line) => `<p>${line}</p>`)
-    .join('');
+  const paragraphs = splitIntoParagraphs(chapter.content);
 
   return (
-    <div className="reader-content no-copy" style={styles} ref={contentRef}>
+    <div className="reader-content no-copy" style={styles} ref={ref}>
       <h1 className="reader-chapter-title">{chapter.title}</h1>
-      <div
-        className="reader-chapter-content"
-        dangerouslySetInnerHTML={{ __html: paragraphsHtml }}
-      />
+      <div className="reader-chapter-content">
+        {paragraphs.map((line, index) => (
+          // Rendered as React children (not dangerouslySetInnerHTML), so
+          // React escapes the text itself — chapter content, including
+          // imported share-link content, can never be interpreted as HTML.
+          <p key={index}>{line}</p>
+        ))}
+      </div>
     </div>
   );
-};
+});
+
+ReadingView.displayName = 'ReadingView';
 
 export default ReadingView;

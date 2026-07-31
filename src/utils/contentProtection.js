@@ -11,7 +11,7 @@ import { useEffect } from 'react';
 // and light anti-piracy goal this was added for.
 export const useContentProtection = (containerRef, enabled = true) => {
   useEffect(() => {
-    const node = containerRef.current;
+    const node = containerRef?.current;
     if (!node || !enabled) return undefined;
 
     const blockEvent = (e) => {
@@ -21,8 +21,13 @@ export const useContentProtection = (containerRef, enabled = true) => {
 
     const blockShortcuts = (e) => {
       const key = e.key?.toLowerCase();
-      // Ctrl/Cmd + C (copy), X (cut), V (paste), A (select all), P (print), S (save), U (view-source)
-      const isCopyLike = (e.ctrlKey || e.metaKey) && ['c', 'x', 'v', 'a', 'p', 's', 'u'].includes(key);
+      // Ctrl/Cmd + C (copy), X (cut), A (select all), P (print), S (save), U (view-source).
+      // Deliberately NOT 'v' (paste): pasting doesn't let anyone extract this
+      // page's content, so there's no anti-copy reason to block it — and this
+      // listener runs at the document level, so blocking paste here would
+      // also break paste into any other input/textarea on the same page
+      // while this component is mounted.
+      const isCopyLike = (e.ctrlKey || e.metaKey) && ['c', 'x', 'a', 'p', 's', 'u'].includes(key);
       if (isCopyLike) {
         e.preventDefault();
         e.stopPropagation();

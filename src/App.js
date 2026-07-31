@@ -10,6 +10,8 @@ import { ThemeProvider } from './hooks/useTheme';
 import { HistoryProvider } from './store/historyStore';
 import { UserProvider } from './store/userStore';
 import { AuthProvider } from './store/authStore';
+import { ToastProvider } from './store/toastStore';
+import { StorageErrorListener } from './components/common/StorageErrorListener';
 
 export const App = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -23,27 +25,30 @@ export const App = () => {
   };
 
   return (
-    <ThemeProvider>
-      <AuthProvider>
-        <NovelProvider>
-          <HistoryProvider>
-            <UserProvider>
-              <ReadingSettingsProvider>
-                <BrowserRouter basename={basePath || undefined}>
-                  <div className="app" style={{ minHeight: '100vh' }}>
-                    <Header onMenuToggle={toggleMenu} isMenuOpen={isMenuOpen} />
-                    <Navigation isOpen={isMenuOpen} onClose={closeMenu} />
-                    <main className="main-content">
-                      <AppRoutes />
-                    </main>
-                    <Footer />
-                  </div>
-                </BrowserRouter>
-              </ReadingSettingsProvider>
-            </UserProvider>
-          </HistoryProvider>
-        </NovelProvider>
-      </AuthProvider>
-    </ThemeProvider>
+    <ToastProvider>
+      <StorageErrorListener />
+      <ThemeProvider>
+        <AuthProvider>
+          <NovelProvider>
+            <HistoryProvider>
+              <UserProvider>
+                <ReadingSettingsProvider>
+                  <BrowserRouter basename={basePath || undefined}>
+                    <div className="app" style={{ minHeight: '100vh' }}>
+                      <Header onMenuToggle={toggleMenu} isMenuOpen={isMenuOpen} />
+                      <Navigation isOpen={isMenuOpen} onClose={closeMenu} />
+                      <main className="main-content">
+                        <AppRoutes />
+                      </main>
+                      <Footer />
+                    </div>
+                  </BrowserRouter>
+                </ReadingSettingsProvider>
+              </UserProvider>
+            </HistoryProvider>
+          </NovelProvider>
+        </AuthProvider>
+      </ThemeProvider>
+    </ToastProvider>
   );
 };

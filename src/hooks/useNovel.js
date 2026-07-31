@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useCallback } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { useLocalStorage } from './useLocalStorage';
+import { sortByField } from '../utils/sortHelpers';
 
 const initialNovels = [];
 
@@ -175,15 +176,7 @@ const useNovelState = () => {
 
   // Get all novels with sorting
   const getAllNovels = useCallback((sortBy = 'updatedAt', order = 'desc') => {
-    const sorted = [...novels].sort((a, b) => {
-      const aVal = a[sortBy] || '';
-      const bVal = b[sortBy] || '';
-      if (order === 'desc') {
-        return aVal > bVal ? -1 : 1;
-      }
-      return aVal < bVal ? -1 : 1;
-    });
-    return sorted;
+    return sortByField(novels, sortBy, order);
   }, [novels]);
 
   // Import a novel received via a share link. Always creates a read-only,
