@@ -1,0 +1,29 @@
+.logo-mark {
+  position: relative;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.logo-mark-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* Light mode (default): dark-ink mark, hide the silver one */
+.logo-mark-for-light {
+  display: block;
+}
+.logo-mark-for-dark {
+  display: none;
+}
+
+/* Dark mode: silver/chrome mark, hide the dark-ink one */
+[data-theme='dark'] .logo-mark-for-light {
+  display: none;
+}
+[data-theme='dark'] .logo-mark-for-dark {
+  display: block;
+}

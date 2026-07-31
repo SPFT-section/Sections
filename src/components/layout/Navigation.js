@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Icon } from '../common/Icon';
+import { Logo } from '../common/Logo';
 import './Navigation.css';
 
 export const Navigation = ({ isOpen, onClose }) => {
@@ -22,12 +23,7 @@ export const Navigation = ({ isOpen, onClose }) => {
       <nav className={`navigation ${isOpen ? 'open' : ''}`}>
         <div className="navigation-header">
           <div className="navigation-logo">
-            <img
-              src="logo-icon.png"
-              alt="SECTiON Logo"
-              width="32"
-              height="32"
-            />
+            <Logo size={32} />
             <span>SECTiON</span>
           </div>
           <button

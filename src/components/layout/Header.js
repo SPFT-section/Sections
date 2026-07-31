@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Icon } from '../common/Icon';
+import { Logo } from '../common/Logo';
 import { Button } from '../common/Button';
 import { ThemeToggle } from '../settings/ThemeToggle';
 import { AuthModal } from '../auth/AuthModal';
@@ -26,13 +27,7 @@ export const Header = ({ onMenuToggle, isMenuOpen }) => {
           </button>
 
           <Link to="/" className="header-logo">
-            <img
-              src="logo-icon.png"
-              alt="SECTiON Logo"
-              className="header-logo-icon"
-              width="32"
-              height="32"
-            />
+            <Logo size={32} className="header-logo-icon" />
             <span className="header-logo-text">SECTiON</span>
             <span className="header-logo-sub">Write. Read. Repeat.</span>
           </Link>

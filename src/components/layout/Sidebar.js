@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Icon } from '../common/Icon';
+import { Logo } from '../common/Logo';
 import './Sidebar.css';
 
 const navLinks = [
@@ -14,7 +15,7 @@ export const Sidebar = ({ currentPath = '/' }) => {
   return (
     <aside className="sidebar">
       <Link to="/" className="sidebar-logo">
-        <img src="logo-icon.png" alt="SECTiON Logo" width="28" height="28" />
+        <Logo size={28} />
         <span>SECTiON</span>
       </Link>
 

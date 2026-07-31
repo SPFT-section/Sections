@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Icon } from '../common/Icon';
+import { Logo } from '../common/Logo';
 import './Footer.css';
 
 export const Footer = () => {
@@ -11,12 +12,7 @@ export const Footer = () => {
       <div className="footer-container">
         <div className="footer-brand">
           <div className="footer-logo">
-            <img
-              src="logo-icon.png"
-              alt="SECTiON Logo"
-              width="24"
-              height="24"
-            />
+            <Logo size={24} />
             <span>SECTiON</span>
           </div>
           <p className="footer-tagline">
