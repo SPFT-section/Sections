@@ -28,7 +28,7 @@
 ## 🛠️ การติดตั้ง
 ```bash
 npm install
-npm start
+npm run dev
 ```
 
 ## ✅ การทดสอบ

@@ -5,7 +5,8 @@
   "main": "src/index.js",
   "homepage": "https://spft-section.github.io/Sections",
   "scripts": {
-    "start": "webpack serve --mode development --open",
+    "start": "serve -s dist -l ${PORT:-3000} --single",
+    "dev:server": "webpack serve --mode development --open",
     "build": "webpack --mode production",
     "build:railway": "cross-env PUBLIC_PATH=/ webpack --mode production",
     "dev": "webpack serve --mode development",
