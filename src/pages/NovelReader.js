@@ -6,6 +6,7 @@ import { ReadingView } from '../components/novel/ReadingView';
 import { useNovel } from '../hooks/useNovel';
 import { useReadingSettings } from '../hooks/useReadingSettings';
 import { useHistoryStore } from '../store/historyStore';
+import { useMusicPlayer } from '../hooks/useMusicPlayer';
 import { format } from '../utils/formatter';
 import './Pages.css';
 
@@ -26,6 +27,13 @@ export const NovelReader = () => {
   const [showSettings, setShowSettings] = useState(false);
   const [progress, setProgress] = useState(0);
   const [isTocOpen, setIsTocOpen] = useState(false);
+  const [musicEnabled, setMusicEnabled] = useState(true);
+
+  const { isPlaying, isMuted, toggleMute } = useMusicPlayer({
+    containerRef: contentRef,
+    cues: currentChapter?.musicCues || [],
+    enabled: musicEnabled,
+  });
 
   useEffect(() => {
     const novelData = getNovel(novelId);
@@ -168,6 +176,22 @@ export const NovelReader = () => {
           <span className="reader-header-title">{novel.title}</span>
         </div>
         <div className="reader-header-right">
+          {currentChapter?.musicCues?.length > 0 && (
+            <Button
+              variant="ghost"
+              size="sm"
+              icon={<Icon name={isMuted ? 'volumeMute' : 'volume'} size={20} />}
+              onClick={() => {
+                if (!musicEnabled) {
+                  setMusicEnabled(true);
+                } else {
+                  toggleMute();
+                }
+              }}
+              aria-label={isMuted ? 'เปิดเสียงเพลงประกอบ' : 'ปิดเสียงเพลงประกอบ'}
+              className={isPlaying && !isMuted ? 'reader-music-active' : ''}
+            />
+          )}
           <Button
             variant="ghost"
             size="sm"

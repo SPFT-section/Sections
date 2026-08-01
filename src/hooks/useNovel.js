@@ -207,6 +207,10 @@ const useNovelState = () => {
         title: c.title || 'Untitled Chapter',
         content: c.content || '',
         order: c.order || index + 1,
+        // Share links only ever carry URL-sourced cues (see
+        // utils/shareLink.js buildPayload) — never 'upload' cues, whose
+        // audio lives only in the sharer's local IndexedDB.
+        musicCues: c.musicCues || [],
         createdAt: Date.now(),
         updatedAt: Date.now(),
       })),

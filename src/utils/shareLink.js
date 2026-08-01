@@ -27,6 +27,12 @@ const buildPayload = (novel, sharedByName) => ({
       title: c.title,
       content: c.content,
       order: c.order,
+      // Only URL-sourced cues travel with a share link — an 'upload'
+      // cue's audio lives in the sharer's own IndexedDB (see
+      // utils/audioStorage.js) and never leaves their browser, so
+      // including it here would just be a dead reference on the
+      // recipient's side.
+      musicCues: (c.musicCues || []).filter((cue) => cue.source === 'url'),
     })),
   },
 });
