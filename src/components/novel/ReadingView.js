@@ -20,7 +20,11 @@ export const ReadingView = React.forwardRef(({ chapter, styles, protect = true }
           // Rendered as React children (not dangerouslySetInnerHTML), so
           // React escapes the text itself — chapter content, including
           // imported share-link content, can never be interpreted as HTML.
-          <p key={index}>{line}</p>
+          // data-paragraph-index gives useMusicPlayer's IntersectionObserver
+          // a stable position to key music cues (startParagraph/
+          // endParagraph) off of, without needing a second parse of the
+          // chapter text.
+          <p key={index} data-paragraph-index={index}>{line}</p>
         ))}
       </div>
     </div>

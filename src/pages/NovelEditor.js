@@ -3,7 +3,9 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { Button } from '../components/common/Button';
 import { Icon } from '../components/common/Icon';
 import { ShareModal } from '../components/novel/ShareModal';
+import { MusicCueEditor } from '../components/novel/MusicCueEditor';
 import { useNovel } from '../hooks/useNovel';
+import { useChapterMusic } from '../hooks/useChapterMusic';
 import { GENRES, NOVEL_STATUS } from '../config/constants';
 import { format } from '../utils/formatter';
 import { compressImage, validateImageFile } from '../utils/image';
@@ -28,6 +30,7 @@ export const NovelEditor = () => {
   const [selectedChapterId, setSelectedChapterId] = useState(null);
   const [isSaving, setIsSaving] = useState(false);
   const [isShareOpen, setIsShareOpen] = useState(false);
+  const [isMusicOpen, setIsMusicOpen] = useState(false);
 
   // Novel info state
   const [title, setTitle] = useState('');
@@ -71,6 +74,13 @@ export const NovelEditor = () => {
   }, [id, getNovel, navigate]);
 
   const chapters = novel ? getChapters(novel.id) : [];
+
+  // Music cues only make sense once a chapter is actually selected (an
+  // unsaved "new chapter" draft has no id to attach cues to yet).
+  const { cues: musicCues, addCue, updateCue, removeCue } = useChapterMusic(
+    novel?.id,
+    !isNewChapter ? selectedChapterId : null
+  );
 
   const handleSaveNovel = () => {
     setIsSaving(true);
@@ -236,6 +246,18 @@ export const NovelEditor = () => {
         novel={novel ? { ...novel, title, author, synopsis, genre, coverImage, chapters } : null}
         authorName={author}
       />
+
+      {!isNewChapter && selectedChapterId && (
+        <MusicCueEditor
+          isOpen={isMusicOpen}
+          onClose={() => setIsMusicOpen(false)}
+          content={chapterContent}
+          cues={musicCues}
+          onAddCue={addCue}
+          onUpdateCue={updateCue}
+          onRemoveCue={removeCue}
+        />
+      )}
 
       <div className="editor-tabs">
         <button
@@ -427,6 +449,14 @@ export const NovelEditor = () => {
                 <h3>{isNewChapter ? 'New Chapter' : 'Edit Chapter'}</h3>
                 {!isNewChapter && selectedChapterId && (
                   <div className="chapter-actions">
+                    <Button
+                      variant="secondary"
+                      size="sm"
+                      icon={<Icon name="music" size={16} />}
+                      onClick={() => setIsMusicOpen(true)}
+                    >
+                      เพลงประกอบ{musicCues.length > 0 ? ` (${musicCues.length})` : ''}
+                    </Button>
                     <Button
                       variant="secondary"
                       size="sm"

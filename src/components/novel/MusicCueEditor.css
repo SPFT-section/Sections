@@ -1,0 +1,136 @@
+.music-cue-editor {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.music-cue-hint {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.music-cue-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.music-cue-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 1px solid var(--border, rgba(0, 0, 0, 0.1));
+  border-radius: var(--radius);
+  background: var(--bg-secondary, rgba(0, 0, 0, 0.02));
+}
+
+.music-cue-item-icon {
+  flex-shrink: 0;
+  color: var(--primary);
+}
+
+.music-cue-item-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.music-cue-item-label {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.music-cue-item-range {
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+}
+
+.music-cue-item-remove {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-tertiary);
+  padding: 6px;
+  border-radius: var(--radius);
+  display: flex;
+}
+
+.music-cue-item-remove:hover {
+  color: var(--danger, #e5484d);
+  background: rgba(229, 72, 77, 0.08);
+}
+
+.music-cue-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border, rgba(0, 0, 0, 0.1));
+}
+
+.music-cue-form-title {
+  margin: 0;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.music-cue-source-toggle {
+  display: flex;
+  gap: 8px;
+}
+
+.music-cue-source-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border: 1px solid var(--border, rgba(0, 0, 0, 0.1));
+  border-radius: var(--radius);
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+  cursor: pointer;
+}
+
+.music-cue-source-btn.active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+}
+
+.music-cue-file-name {
+  font-size: var(--text-xs);
+  color: var(--text-secondary);
+}
+
+.music-cue-error {
+  font-size: var(--text-xs);
+  color: var(--danger, #e5484d);
+}
+
+.music-cue-range-group {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.music-cue-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  cursor: pointer;
+}

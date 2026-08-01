@@ -69,6 +69,11 @@ const iconMap = {
   // เพิ่มไอคอนที่ใช้ในหน้า NovelReader
   toc: LucideIcons.List,
   'table-of-contents': LucideIcons.List,
+  // เพิ่มไอคอนสำหรับระบบเพลงประกอบ (MusicCueEditor / reader music toggle)
+  music: LucideIcons.Music,
+  pause: LucideIcons.Pause,
+  volume: LucideIcons.Volume2,
+  volumeMute: LucideIcons.VolumeX,
 };
 
 export const Icon = ({
